@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class MoveCamera : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 	//Variables
 	public float speedH = 2.0f;
@@ -10,10 +11,9 @@ public class MoveCamera : MonoBehaviour
 	private float yaw = 0.0f;
 	private float pitch = 0.0f;
 
-	public bool canMove = false;
 	public float speed = 6.0f;
 	public float jumpSpeed = 8.0f;
-	public float gravity = 18f;
+	public float gravity = 10f;
 	private Vector3 moveDirection = Vector3.zero;
 
 	void Update()
@@ -34,19 +34,13 @@ public class MoveCamera : MonoBehaviour
 		}
 		//Applying gravity to the controller
 		moveDirection.y -= gravity * Time.deltaTime;
-		
-		//Making the character move only if this bool funtion is true
-		if (canMove == true)
-		{
-			//Debug.Log("canMove = true");
-			controller.Move(moveDirection * Time.deltaTime);
-		}
+		//Making the character move
+		controller.Move(moveDirection * Time.deltaTime);
 		if (Input.GetMouseButton(1))
 		{
 			yaw += speedH * Input.GetAxis("Mouse X");
 			pitch -= speedV * Input.GetAxis("Mouse Y");
 			transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 		}
-
 	}
 }
