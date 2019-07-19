@@ -8,7 +8,7 @@ public class ScreenController : MonoBehaviour
 	public GameObject gameScreen;
 	public GameObject endScreen;
 	public Animator obstaclesAnimator;
-	public GameController gameManager;
+	public GameController gameController;
 	//Sets all the screens off in the start of the game
 	private void Start()
 	{
@@ -29,7 +29,7 @@ public class ScreenController : MonoBehaviour
 		startScreen.SetActive(false);
 		gameScreen.SetActive(false);
 		endScreen.SetActive(false);
-		if (gameManager.passedStage == true)
+		if (gameController.passedStage == true)
 		{
 			obstaclesAnimator.SetInteger("Stage", 3);
 		}
