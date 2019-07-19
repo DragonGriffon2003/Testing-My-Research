@@ -34,8 +34,7 @@ public class GameController : MonoBehaviour
 		if (unansweredQuestions == null || unansweredQuestions.Count == 0)
 		{
 			screenController.CloseGame();
-			//Debug.Log("RESTARTED");
-			
+			//Debug.Log("RESTARTED");			
 		}
 		setCurrentQuestion();
 		updateScore();
@@ -55,9 +54,7 @@ public class GameController : MonoBehaviour
 	{
 		int randomQuestionIndex = Random.Range(0, unansweredQuestions.Count);
 		currentQuestion = unansweredQuestions[randomQuestionIndex];
-
 		questionText.text = currentQuestion.question;
-
 	}
 
 	void Transition()
@@ -70,7 +67,7 @@ public class GameController : MonoBehaviour
 			screenController.CloseGame();
 		}
 
-		if (scorePoints > 20)
+		if (scorePoints >= 30)
 			passedStage = true;
 		else
 			passedStage = false;
