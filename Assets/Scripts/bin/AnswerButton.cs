@@ -14,7 +14,7 @@ public class AnswerButton : MonoBehaviour
 	{
 		gamemanager = FindObjectOfType<GameManager>();
 	}
-
+	
 	public void Setup(AnswerData data)
 	{
 		answerData = data;

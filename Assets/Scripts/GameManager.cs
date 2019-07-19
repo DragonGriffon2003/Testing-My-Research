@@ -10,23 +10,24 @@ public class GameManager : MonoBehaviour
 	public ScreenController screenController;
 	public RoundData roundData;
 	public List<QuestionData> questionPoolList;
-	private QuestionData[] questionPool;
+	//private QuestionData[] questionPool;
 	private int questionIndex;
 	public TextMeshPro questionText;
-
+	//public List<GameObject> answerButtonsGameObjects;
+	
 	public TextMeshPro scoreText;
+	public TextMeshPro endScoreText;
+	public TextMeshPro closeGameText;
 	private int score;
 
-	public SimpleObjectPool answerButtonObjectPooler;
 	public Transform answerButtonParent;
 	private List<GameObject> answerButtonGameObjects = new List<GameObject>();
-
-	public Animator obstaclesAnimator;
+	public bool passedStage;
 	public float timeBetweenQuestions = 1f;
 
 	private void Start()
 	{
-		questionPool = roundData.questions;
+		//questionPool = roundData.questions;
 		questionPoolList.AddRange(roundData.questions);
 		questionIndex = 0;
 		SettingCurrentQuestion();
@@ -34,30 +35,10 @@ public class GameManager : MonoBehaviour
 
 	private void SettingCurrentQuestion()
 	{
-		RemoverAnswerButtons();
 		QuestionData questionData = questionPoolList[questionIndex];
-		questionText.text = questionData.questionText;
-
 		questionText.text = questionData.questionText;
 		questionPoolList.RemoveAt(questionIndex);
 
-		for (int i = 0; i < questionData.answers.Length; i++)
-		{
-			GameObject answerButtonGameObject = answerButtonObjectPooler.GetObject();
-			answerButtonGameObject.transform.SetParent(answerButtonParent);
-			answerButtonGameObjects.Add(answerButtonGameObject);
-			AnswerButton answerButton = answerButtonGameObject.GetComponent<AnswerButton>();
-			answerButton.Setup(questionData.answers[i]);
-		}
-	}
-	private void RemoverAnswerButtons()
-	{
-		while (answerButtonGameObjects.Count > 0)
-		{
-			answerButtonObjectPooler.ReturnObject(answerButtonGameObjects[0]);
-			answerButtonGameObjects.RemoveAt(0);
-		}
-		StartCoroutine(TransitionToNextQuestion());
 	}
 
 	IEnumerator TransitionToNextQuestion()
@@ -73,10 +54,16 @@ public class GameManager : MonoBehaviour
 			scoreText.text = "Score: " + score.ToString();
 		}
 
-		if (questionPoolList.Count > questionIndex + 1)
+		if (isCorrect)
+		{
+
+		}
+
+			if (questionPoolList.Count > questionIndex + 1)
 		{
 			questionIndex++;
 			SettingCurrentQuestion();
+			StartCoroutine(TransitionToNextQuestion());
 		}
 		else
 		{
@@ -87,9 +74,24 @@ public class GameManager : MonoBehaviour
 
 	public void EndRound()
 	{
-		obstaclesAnimator.SetInteger("Stage", 3);
 		questionIndex = 0;
 		screenController.SetEndActive();
+		endScoreText.text = "Score: " + score;
+		if (score >= 20)
+		{
+			passedStage = true;
+			closeGameText.text = "You passed" + "Press to continue";
+		}
+		else
+		{
+			passedStage = false;
+			closeGameText.text = "You failed" + "Press to continue"; ;
+		}
 		//questionPoolList.AddRange(roundData.questions);
 	}
+	/*
+	public void UserSelectTrue()
+	{
+		
+	}*/
 }
