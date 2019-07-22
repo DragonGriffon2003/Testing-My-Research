@@ -5,12 +5,14 @@ using UnityEngine;
 public class EndPoint : MonoBehaviour
 {
 	//public MoveCamera moveCamera;
+	//public Renderer childRenderer;
+	
 	public void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.tag == "MainCamera")
-		{
-			other.GetComponent<MoveCamera>().canMove = false;
-			gameObject.GetComponentInChildren<Renderer>().enabled = true;
-		}
+		Debug.Log(other.name);
+		other.GetComponent<MoveCamera>().canMove = false;
+		//childRenderer.enabled = true;
+		gameObject.GetComponentInChildren<Renderer>().enabled = true;
 	}
+	
 }

@@ -24,7 +24,6 @@ public class GameController : MonoBehaviour
 	private Scene scene;
 	void Start()
 	{
-		scene = SceneManager.GetActiveScene();
 		scorePoints = 0;
 		unansweredQuestions = questions.ToList<Question>();
 		StartScene();
@@ -61,17 +60,20 @@ public class GameController : MonoBehaviour
 	void Transition()
 	{
 		unansweredQuestions.Remove(currentQuestion);
-		StartScene();
-
-		if (unansweredQuestions == null || unansweredQuestions.Count == 0)
-		{			
-			screenController.CloseGame();
+		if (scorePoints >= questions.Length * 10)
+		{
+			passedStage = true;
+			//scoreText.text = "Score: " + scorePoints;
+			Debug.Log("Passed");
+			StartScene();
+		}
+		else
+		{
+			passedStage = false;
+			StartScene();
 		}
 
-		if (scorePoints >= 30)
-			passedStage = true;
-		else if (unansweredQuestions.Count == 0)
-			 SceneManager.LoadScene(scene.name);
+	
 	}
 
 	public void UserSelectTrue()

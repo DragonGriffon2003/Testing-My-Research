@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScreenController : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class ScreenController : MonoBehaviour
 	public GameObject endScreen;
 	public Animator obstaclesAnimator;
 	public GameController gameController;
+
+	private Scene scene;
+
 	//Sets all the screens off in the start of the game
 	private void Start()
 	{
+		scene = SceneManager.GetActiveScene();
+
 		startScreen.SetActive(false);
 		gameScreen.SetActive(false);
 		endScreen.SetActive(false);
@@ -35,12 +41,13 @@ public class ScreenController : MonoBehaviour
 		}
 		else
 		{
-			obstaclesAnimator.SetInteger("Stage", 1);
+			SceneManager.LoadScene(scene.name);
+			//obstaclesAnimator.SetInteger("Stage", 1);
 		}
 	}
 
 	public void SetGameActive()
-	{
+	{ 
 		startScreen.SetActive(false);
 		gameScreen.SetActive(true);
 		endScreen.SetActive(false);
