@@ -3,12 +3,12 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
 	public Question[] questions;
-	private static List<Question> unansweredQuestions;
+	private List<Question> unansweredQuestions;
 
 	private Question currentQuestion;
 
@@ -21,9 +21,10 @@ public class GameController : MonoBehaviour
 	//public Animator obstaclesAnimator;
 	public ScreenController screenController;
 	public bool passedStage;
-
+	private Scene scene;
 	void Start()
 	{
+		scene = SceneManager.GetActiveScene();
 		scorePoints = 0;
 		unansweredQuestions = questions.ToList<Question>();
 		StartScene();
@@ -69,8 +70,8 @@ public class GameController : MonoBehaviour
 
 		if (scorePoints >= 30)
 			passedStage = true;
-		else
-			passedStage = false;
+		else if (unansweredQuestions.Count == 0)
+			 SceneManager.LoadScene(scene.name);
 	}
 
 	public void UserSelectTrue()
