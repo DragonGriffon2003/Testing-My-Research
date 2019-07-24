@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
-	//public MoveCamera moveCamera;
-	//public Renderer childRenderer;
+	public Renderer[] rs;
+
+	private void Start()
+	{
+		rs = GetComponentsInChildren<Renderer>();
+		ChildRendererEnable(false);
+	}
 	
 	public void OnTriggerEnter(Collider other)
 	{
-		Debug.Log(other.name);
+		other.transform.position = new Vector3 (gameObject.transform.position.x, other.transform.position.y, gameObject.transform.position.z);
 		other.GetComponent<MoveCamera>().canMove = false;
-		//childRenderer.enabled = true;
-		gameObject.GetComponentInChildren<Renderer>().enabled = true;
+		ChildRendererEnable(true);
 	}
-	
+
+	void ChildRendererEnable(bool enabledState)
+	{
+		foreach (Renderer r in rs)
+		{
+			r.enabled = enabledState;
+		}
+	}
 }

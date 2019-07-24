@@ -13,6 +13,4 @@ public class PressButton: MonoBehaviour
 	{
 		anEvent.Invoke();
 	}
-
-
 }

@@ -31,8 +31,13 @@ public class MoveCamera : MonoBehaviour
 			//Feed moveDirection with input.
 			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 			moveDirection = transform.TransformDirection(moveDirection);
+
 			//Multiply it by speed.
-			moveDirection *= speed;
+			if (Input.GetKey(KeyCode.LeftShift))
+				moveDirection *= speed * 2.5f;
+			else
+				moveDirection *= speed;
+			
 			//Jumping
 			if (Input.GetButton("Jump"))
 				moveDirection.y = jumpSpeed;
@@ -53,6 +58,5 @@ public class MoveCamera : MonoBehaviour
 			pitch -= speedV * Input.GetAxis("Mouse Y");
 			transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 		}
-
 	}
 }
